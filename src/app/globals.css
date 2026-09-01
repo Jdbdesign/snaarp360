@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Global base styles ported verbatim from the standalone Snaarp 360 bundle.
+  Original:
+    *{box-sizing:border-box}
+    body{margin:0;background:#ffffff;font-family:'Poppins',system-ui,sans-serif;color:#4B5563;-webkit-font-smoothing:antialiased}
+    a{color:#7C3AED;text-decoration:none}
+    a:hover{color:#6D28D9}
+    img{display:block}
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /*
+    Shared content container width. The standalone artifact used 1200px, which
+    left large empty gutters on wide screens; widened here to fill big displays
+    while keeping line lengths comfortable. Tune this single value to adjust the
+    left/right margins site-wide.
+  */
+  --container-max: 1440px;
+
+  /*
+    Hero grid columns. The second (demo) column is wider than the first (text)
+    so the self-scaling mockup renders larger and its height better matches the
+    tall headline column. Stacks to a single column on narrow screens below.
+  */
+  --hero-cols: minmax(0, 1fr) minmax(0, 1.6fr);
+
+  /* The hero band is allowed to be a touch wider than other sections so the
+     demo mockup has more room and its height comes closer to the headline. */
+  --hero-max: 1600px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --hero-cols: minmax(0, 1fr);
+  }
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  color: #4b5563;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #7c3aed;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #6d28d9;
+}
+
+img {
+  display: block;
+}
+
+/* Keyframes ported verbatim from the standalone bundle. */
+@keyframes snpRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes snpRise {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes snpMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Sequential card entrance for the Features grid: slide up + fade + subtle
+   scale. Applied per-card with a staggered animation-delay. */
+@keyframes snpRiseCard {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes snpCaret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/*
+  Scroll-reveal system, ported from the standalone bundle's JS-applied inline
+  styles. Elements start hidden and are revealed by an IntersectionObserver
+  (see useScrollReveal). The transition timing/easing match the original
+  exactly: opacity/transform .66s cubic-bezier(.16,1,.3,1).
+*/
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.66s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.66s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].snp-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  Respect reduced-motion: if the user prefers reduced motion, everything is
+  shown immediately with no reveal transition (matching the original, which
+  bailed out of setupReveal entirely under prefers-reduced-motion).
+*/
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

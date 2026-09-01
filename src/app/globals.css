@@ -35,11 +35,62 @@
   /* The hero band is allowed to be a touch wider than other sections so the
      demo mockup has more room and its height comes closer to the headline. */
   --hero-max: 1600px;
+
+  /*
+    Features section layout. The text column is narrower than the card area so
+    the six feature cards lay out 3-across (2 rows) at every desktop/laptop
+    width — matching the large-screen look. The card grid is a fixed 3 columns.
+  */
+  --features-cols: minmax(0, 0.85fr) minmax(0, 1.6fr);
+  --features-card-cols: repeat(3, minmax(0, 1fr));
+}
+
+/* Tablet: stack the section (text over cards); keep cards 3-across. */
+@media (max-width: 900px) {
+  :root {
+    --features-cols: minmax(0, 1fr);
+  }
+}
+
+/* Small tablet / large phone: cards drop to 2-across. */
+@media (max-width: 640px) {
+  :root {
+    --features-card-cols: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Phone: cards single column. */
+@media (max-width: 440px) {
+  :root {
+    --features-card-cols: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 900px) {
   :root {
     --hero-cols: minmax(0, 1fr);
+  }
+}
+
+/*
+  Laptop range (roughly 901–1440px): large screens (>=1441px) are untouched.
+  On laptops the hero headline was hitting its 60px cap in a narrow column
+  (wrapping to 4 lines) and the demo column was proportionally too wide, so the
+  mockup looked oversized/cut. Give the text column more room and dial the
+  headline size down so it settles to 3 lines.
+*/
+@media (min-width: 901px) and (max-width: 1440px) {
+  :root {
+    --hero-cols: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+  .hero-title {
+    font-size: clamp(30px, 3.6vw, 46px) !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1150px) {
+  .hero-title {
+    font-size: clamp(28px, 3.4vw, 40px) !important;
   }
 }
 

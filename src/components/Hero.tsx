@@ -53,6 +53,7 @@ export default function Hero() {
           ALL-IN-ONE BUSINESS PLATFORM
         </span>
         <h1
+          className="hero-title"
           style={{
             margin: "22px 0 0",
             fontSize: "clamp(34px,5.1vw,60px)",

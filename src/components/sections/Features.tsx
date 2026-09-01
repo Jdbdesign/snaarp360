@@ -65,8 +65,11 @@ export default function Features() {
           margin: "0 auto",
           padding: "0 24px",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+          // Text column is narrower than the card area so the 6 cards can lay
+          // out 3-across (2 rows) rather than 2-across. Stacks on mobile.
+          gridTemplateColumns: "var(--features-cols)",
           gap: "clamp(32px,4vw,56px)",
+          alignItems: "start",
         }}
       >
         <div data-reveal="0" style={{ maxWidth: 520 }}>
@@ -101,7 +104,7 @@ export default function Features() {
                 style={{
                   gridArea: "1 / 1",
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))",
+                  gridTemplateColumns: "var(--features-card-cols)",
                   gap: 16,
                   visibility: isActive ? "visible" : "hidden",
                   pointerEvents: isActive ? "auto" : "none",

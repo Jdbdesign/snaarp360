@@ -11,6 +11,7 @@ import Workflow from "@/components/sections/Workflow";
 import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
 import Faq from "@/components/sections/Faq";
+import Blog from "@/components/sections/Blog";
 import FinalCta from "@/components/sections/FinalCta";
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       <Pricing />
       <Testimonials />
       <Faq />
+      <Blog />
       <FinalCta />
       <Footer />
       <ScrollReveal />

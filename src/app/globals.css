@@ -66,6 +66,144 @@
   }
 }
 
+/* ---- Blog section ---------------------------------------------------- */
+:root {
+  --blog-cols: repeat(3, minmax(0, 1fr)); /* 3 across on desktop/laptop */
+}
+@media (max-width: 1023px) {
+  :root {
+    --blog-cols: repeat(2, minmax(0, 1fr)); /* tablet: 2 across */
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --blog-cols: minmax(0, 1fr); /* mobile: single column */
+  }
+}
+
+/* "View Post" link — violet on hover (design system primary). */
+.snp-viewpost {
+  transition: color 0.15s ease;
+}
+.snp-viewpost:hover {
+  color: #7c3aed;
+}
+
+/* "How It Works" tour: left product navigator + right live mockup. */
+:root {
+  --tour-cols: 380px minmax(0, 1fr);
+}
+@media (max-width: 900px) {
+  :root {
+    --tour-cols: minmax(0, 1fr);
+  }
+}
+
+/* Workflow mockup app rail — scrollable when icons overflow, scrollbar hidden. */
+.snp-rail {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.snp-rail::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* How-It-Works product navigator: thin, auto-hiding scrollbar. */
+.snp-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease;
+}
+.snp-scroll:hover {
+  scrollbar-color: #d4d1de transparent; /* Firefox: show on hover */
+}
+.snp-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.snp-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.snp-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.snp-scroll:hover::-webkit-scrollbar-thumb {
+  background: #d4d1de;
+  background-clip: content-box;
+}
+.snp-scroll::-webkit-scrollbar-thumb:hover {
+  background: #b9b5c6;
+  background-clip: content-box;
+}
+
+/*
+  Reusable "ping" attention pulse. Wrap any element in an element with
+  `.snp-pulse` (position it relatively). A soft amber ring expands outward
+  from the element's bounds and fades, looping — signalling the clickable
+  entry point. Reusable so it can later mark the currently-selected element,
+  not just the Compose button. Respects prefers-reduced-motion.
+*/
+@keyframes snpPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+.snp-pulse {
+  position: relative;
+  isolation: isolate;
+}
+.snp-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: inherit;
+  border: 3px solid #dc2626;
+  z-index: -1;
+  pointer-events: none;
+  transform-origin: center;
+  animation: snpPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snp-pulse::after {
+    animation: none;
+    inset: -4px;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Collapsed accordion card hover — subtle canvas-soft shift signalling clickable. */
+.snp-accordion-card:hover {
+  background: #F1F1F3 !important;
+}
+
+/* Expanded feature row hover. */
+.snp-feature-row:hover {
+  background: #F7F7F7;
+}
+
+/* "View All Posts" outline pill — violet border/text on hover. */
+.snp-viewall {
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.snp-viewall:hover {
+  color: #7c3aed;
+  border-color: #7c3aed;
+  background: #f3edff;
+}
+
 @media (max-width: 900px) {
   :root {
     --hero-cols: minmax(0, 1fr);

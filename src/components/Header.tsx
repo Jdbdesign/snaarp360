@@ -1,12 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { icons } from "@/lib/assets";
 
 /**
  * Sticky site header ported from the standalone bundle's <header>.
  * The original `style-hover` attributes are reproduced as real Tailwind
  * `hover:` utilities (nav link color -> #111111, CTA bg -> #6D28D9).
+ * The active nav item (matched against the current route) gets the brand
+ * colour + an underline indicator.
  */
 export default function Header() {
+  const pathname = usePathname();
   const navLink =
     "text-[14px] font-medium text-[#4B5563] transition-colors hover:text-[#111111]";
 
@@ -35,7 +41,7 @@ export default function Header() {
         }}
       >
         <a
-          href="#top"
+          href="/"
           style={{ display: "flex", alignItems: "center", gap: 9, flex: "0 0 auto" }}
         >
           <Image
@@ -86,6 +92,22 @@ export default function Header() {
           <a href="#features" className={navLink} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             Solutions
             <span style={{ fontSize: 9, color: "#9CA3AF" }}>▾</span>
+          </a>
+          <a
+            href="/how-it-works"
+            aria-current={pathname === "/how-it-works" ? "page" : undefined}
+            className={
+              pathname === "/how-it-works"
+                ? "text-[14px] font-semibold text-[#7C3AED] transition-colors"
+                : navLink
+            }
+            style={
+              pathname === "/how-it-works"
+                ? { position: "relative", paddingBottom: 4, borderBottom: "2px solid #7C3AED" }
+                : undefined
+            }
+          >
+            How it works
           </a>
           <a href="#faq" className={navLink} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             Resources

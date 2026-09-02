@@ -1,0 +1,125 @@
+import type { Metadata } from "next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ScrollReveal from "@/components/ScrollReveal";
+import ComparisonTable from "@/components/sections/ComparisonTable";
+import Pricing from "@/components/sections/Pricing";
+import Testimonials from "@/components/sections/Testimonials";
+import ProductNavigator from "@/components/howitworks/ProductNavigator";
+import MailMockup from "@/components/howitworks/MailMockup";
+
+export const metadata: Metadata = {
+  title: "How It Works — Snaarp 360 Interactive Product Tour",
+  description:
+    "Every Snaarp app, live in your browser. Pick a product, try the real features, and check them off as you go — no demo video, no sales call.",
+};
+
+export default function HowItWorks() {
+  return (
+    <>
+      <Header />
+
+      {/* Page header */}
+      <section
+        data-reveal="0"
+        style={{
+          maxWidth: "var(--container-max)",
+          margin: "0 auto",
+          padding: "clamp(48px,6vw,84px) 24px clamp(24px,3vw,36px)",
+          textAlign: "center",
+        }}
+      >
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            background: "#F3EDFF",
+            color: "#7C3AED",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: ".12em",
+            borderRadius: 999,
+            padding: "8px 16px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          INTERACTIVE PRODUCT TOUR
+        </span>
+        <h1
+          style={{
+            margin: "22px 0 0",
+            fontSize: "clamp(32px,4.6vw,56px)",
+            lineHeight: 1.06,
+            letterSpacing: "-.03em",
+            fontWeight: 800,
+            color: "#111111",
+            textWrap: "balance",
+          }}
+        >
+          Stop Watching. Start Clicking.
+        </h1>
+        <p
+          style={{
+            margin: "18px auto 0",
+            maxWidth: 620,
+            fontSize: 17,
+            lineHeight: 1.6,
+            color: "#4B5563",
+            textWrap: "pretty",
+          }}
+        >
+          Every Snaarp app, live in your browser. Pick a product, try the real
+          features, and check them off as you go — no demo video, no sales call.
+        </p>
+      </section>
+
+      {/* Interactive panel: left navigator + right live mockup */}
+      <section
+        data-reveal="0"
+        style={{
+          maxWidth: "var(--container-max)",
+          margin: "0 auto",
+          padding: "clamp(12px,2vw,20px) 24px clamp(56px,7vw,90px)",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "var(--tour-cols)",
+            gap: 24,
+            alignItems: "stretch",
+          }}
+        >
+          {/* Left: product & feature navigator — padded card, height matched to
+              the mockup so both panels align top-to-bottom as a pair. */}
+          <div
+            style={{
+              height: 620,
+              background: "#ffffff",
+              border: "1px solid #EEECF3",
+              borderRadius: 18,
+              boxShadow: "0 1px 2px rgba(17,17,17,.04),0 10px 26px rgba(17,17,17,.05)",
+              padding: 16,
+            }}
+          >
+            <ProductNavigator />
+          </div>
+
+          {/* Right: live mockup */}
+          <div style={{ height: 620, minWidth: 0 }}>
+            <MailMockup />
+          </div>
+        </div>
+      </section>
+
+      {/* Reused homepage sections */}
+      <ComparisonTable />
+      <Pricing />
+      <Testimonials />
+
+      <Footer />
+      <ScrollReveal />
+    </>
+  );
+}

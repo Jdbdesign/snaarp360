@@ -5,8 +5,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ComparisonTable from "@/components/sections/ComparisonTable";
 import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
-import ProductNavigator from "@/components/howitworks/ProductNavigator";
-import MailMockup from "@/components/howitworks/MailMockup";
+import TourPanel from "@/components/howitworks/TourPanel";
 
 export const metadata: Metadata = {
   title: "How It Works — Snaarp 360 Interactive Product Tour",
@@ -83,34 +82,7 @@ export default function HowItWorks() {
           padding: "clamp(12px,2vw,20px) 24px clamp(56px,7vw,90px)",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "var(--tour-cols)",
-            gap: 24,
-            alignItems: "stretch",
-          }}
-        >
-          {/* Left: product & feature navigator — padded card, height matched to
-              the mockup so both panels align top-to-bottom as a pair. */}
-          <div
-            style={{
-              height: 620,
-              background: "#ffffff",
-              border: "1px solid #EEECF3",
-              borderRadius: 18,
-              boxShadow: "0 1px 2px rgba(17,17,17,.04),0 10px 26px rgba(17,17,17,.05)",
-              padding: 16,
-            }}
-          >
-            <ProductNavigator />
-          </div>
-
-          {/* Right: live mockup */}
-          <div style={{ height: 620, minWidth: 0 }}>
-            <MailMockup />
-          </div>
-        </div>
+        <TourPanel />
       </section>
 
       {/* Reused homepage sections */}

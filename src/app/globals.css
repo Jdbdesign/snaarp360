@@ -171,6 +171,16 @@
   transform-origin: center;
   animation: snpPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
+/*
+  Front-facing variant: the ring sits ABOVE the element instead of behind it.
+  Use when the pulse target lives inside a container whose background or
+  `overflow` would otherwise hide the behind-the-element ring (e.g. the
+  Default/Compact segmented toggle). The ring is a thin transparent-centre
+  border, so the element's own label stays fully legible.
+*/
+.snp-pulse-front::after {
+  z-index: 2;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .snp-pulse::after {
@@ -296,6 +306,67 @@ img {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Sign-in screen orbit: the ring of product icons slowly rotates around the
+   fixed centre logo. Icons counter-rotate (snpOrbitCounter) to stay upright. */
+@keyframes snpOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes snpOrbitCounter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+.snp-orbit-ring {
+  animation: snpOrbit 26s linear infinite;
+}
+.snp-orbit-icon {
+  animation: snpOrbitCounter 26s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .snp-orbit-ring,
+  .snp-orbit-icon {
+    animation: none;
+  }
+}
+
+/* Smooth fade when the tour swaps the right-panel mockup (re-keyed on change). */
+@keyframes snpMockupFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.snp-mockup-fade {
+  animation: snpMockupFade 0.4s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .snp-mockup-fade {
+    animation: none;
+  }
+}
+
+/* Spinner for loading states (e.g. the sign-in button). */
+@keyframes snpSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.snp-spin {
+  animation: snpSpin 0.8s linear infinite;
 }
 
 @keyframes snpCaret {

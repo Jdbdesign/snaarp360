@@ -11,6 +11,8 @@
 // Snaarp app icons (used across hero demo, features, header, footer).
 export const icons = {
   snaarp: "/assets/icons/snaarp.svg",
+  // Dedicated Snaarp "S" mark (Snaarp Fav (4).svg) used on the sign-in screen.
+  snaarpMark: "/assets/icons/snaarp-mark.svg",
   mail: "/assets/icons/mail.svg",
   meet: "/assets/icons/meet.svg",
   teams: "/assets/icons/teams.svg",

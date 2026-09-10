@@ -49,6 +49,18 @@ export default function SignUpForm({ plan }: { plan: PlanDef }) {
 
   const dialCode = countries.find((c) => c.name === country)?.code ?? "+234";
 
+  // The CTA stays inactive (grey) until every field is completed, then turns
+  // to the brand violet gradient.
+  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+  const formComplete =
+    first.trim().length > 0 &&
+    last.trim().length > 0 &&
+    emailValid &&
+    org.trim().length > 0 &&
+    country.trim().length > 0 &&
+    phone.trim().length >= 6 &&
+    password.length >= 6;
+
   return (
     <div style={{ background: "#F7F7F8", padding: "clamp(28px,3vw,44px)", display: "flex", flexDirection: "column" }}>
       {/* Brand */}
@@ -135,21 +147,23 @@ export default function SignUpForm({ plan }: { plan: PlanDef }) {
           </button>
         </div>
 
-        {/* Submit */}
+        {/* Submit — inactive (grey) until the form is complete, then brand gradient */}
         <button
           type="submit"
-          className="transition-transform hover:-translate-y-0.5"
+          disabled={!formComplete}
+          className={formComplete ? "transition-transform hover:-translate-y-0.5" : "transition-colors"}
           style={{
             width: "100%",
             height: 52,
             border: "none",
             borderRadius: 12,
-            background: "linear-gradient(90deg,#A78BFA 0%,#7C3AED 100%)",
-            color: "#ffffff",
+            background: formComplete ? "linear-gradient(90deg,#A78BFA 0%,#7C3AED 100%)" : "#E5E3EA",
+            color: formComplete ? "#ffffff" : "#9CA3AF",
             fontSize: 15,
             fontWeight: 700,
-            cursor: "pointer",
-            boxShadow: "0 8px 22px rgba(124,58,237,.30)",
+            cursor: formComplete ? "pointer" : "not-allowed",
+            boxShadow: formComplete ? "0 8px 22px rgba(124,58,237,.30)" : "none",
+            transition: "background .2s ease, color .2s ease, box-shadow .2s ease",
           }}
         >
           Sign up to {plan.name}

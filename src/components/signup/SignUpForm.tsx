@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Eye, EyeOff, ChevronDown } from "lucide-react";
 import { icons } from "@/lib/assets";
-import type { PlanDef } from "@/app/sign-up/page";
+import type { PlanDef } from "@/lib/plans";
 
 /**
  * Right-hand sign-up form. Working inputs (controlled), password reveal toggle,

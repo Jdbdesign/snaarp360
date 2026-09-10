@@ -119,11 +119,11 @@ export default function Header() {
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: 16, flex: "0 0 auto" }}>
-          <a href="#top" style={{ fontSize: 14, fontWeight: 500, color: "#111111" }}>
+          <a href="/sign-in" style={{ fontSize: 14, fontWeight: 500, color: "#111111" }}>
             Log In
           </a>
           <a
-            href="#pricing"
+            href="/sign-up"
             className="transition-colors hover:!bg-[#6D28D9]"
             style={{
               fontSize: 14,

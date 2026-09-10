@@ -92,10 +92,13 @@
 /* "How It Works" tour: left product navigator + right live mockup. */
 :root {
   --tour-cols: 380px minmax(0, 1fr);
+  /* Sign-up: left orbit/features panel + right form. */
+  --signup-cols: minmax(0, 1fr) minmax(0, 1fr);
 }
 @media (max-width: 900px) {
   :root {
     --tour-cols: minmax(0, 1fr);
+    --signup-cols: minmax(0, 1fr);
   }
 }
 
@@ -332,9 +335,27 @@ img {
 .snp-orbit-icon {
   animation: snpOrbitCounter 26s linear infinite;
 }
+/* Sign-up hero uses two concentric orbits at different speeds/directions for
+   depth. Each ring's icons counter-rotate at the matching speed to stay level. */
+.snp-orbit-ring-inner {
+  animation: snpOrbit 22s linear infinite;
+}
+.snp-orbit-icon-inner {
+  animation: snpOrbitCounter 22s linear infinite;
+}
+.snp-orbit-ring-outer {
+  animation: snpOrbit 40s linear infinite reverse;
+}
+.snp-orbit-icon-outer {
+  animation: snpOrbitCounter 40s linear infinite reverse;
+}
 @media (prefers-reduced-motion: reduce) {
   .snp-orbit-ring,
-  .snp-orbit-icon {
+  .snp-orbit-icon,
+  .snp-orbit-ring-inner,
+  .snp-orbit-icon-inner,
+  .snp-orbit-ring-outer,
+  .snp-orbit-icon-outer {
     animation: none;
   }
 }
@@ -410,4 +431,10 @@ img {
     transform: none;
     transition: none;
   }
+}
+
+/* Sign-in landing: product tiles lift slightly on hover. */
+.snp-signin-tile:hover > span:first-child {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.3);
 }

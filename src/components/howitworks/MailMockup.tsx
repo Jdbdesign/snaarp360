@@ -182,6 +182,15 @@ const APPS: { name: string; icon: string }[] = [
 // The file the user "selects" from their computer.
 const UPLOAD_FILE = { name: "Recording 2026-09-01 021820.mp4", size: "18.4 MB" };
 
+// Example prompts the AI composer's placeholder cycles through (typewriter
+// loop) while the field is empty and unfocused — nudges the user to type.
+const AI_PROMPT_EXAMPLES = [
+  "Describe what you want to write…",
+  "Follow up with Victor about the landing page images…",
+  "Draft a thank-you note to the design team…",
+  "Summarize this thread for my manager…",
+];
+
 // The email body the AI "generates".
 const AI_BODY = `Hi Priya,
 
@@ -217,6 +226,13 @@ export default function MailMockup({
   const [subject, setSubject] = useState("");
   const [aiOpen, setAiOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState("");
+  const [aiPromptFocused, setAiPromptFocused] = useState(false);
+  // Typewriter loop driving the composer's placeholder: types out an example
+  // prompt, holds, deletes it, then moves to the next — paused while the
+  // field is focused or already has text, and resumes where it left off.
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const [deleting, setDeleting] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [body, setBody] = useState("");
   const [attachOpen, setAttachOpen] = useState(false);
@@ -446,6 +462,30 @@ export default function MailMockup({
     };
   }, [uploadStage]);
 
+  // Type/delete one character of the AI composer's placeholder, looping
+  // through AI_PROMPT_EXAMPLES. Pauses while focused or the field has text —
+  // just returns without scheduling, so it resumes from the same spot later.
+  useEffect(() => {
+    if (aiPromptFocused || aiPrompt) return;
+    const current = AI_PROMPT_EXAMPLES[phraseIdx];
+    let delay = deleting ? 25 : 55;
+    if (!deleting && charCount === current.length) delay = 1400;
+    else if (deleting && charCount === 0) delay = 350;
+
+    const timer = setTimeout(() => {
+      if (!deleting) {
+        if (charCount < current.length) setCharCount((c) => c + 1);
+        else setDeleting(true);
+      } else if (charCount > 0) {
+        setCharCount((c) => c - 1);
+      } else {
+        setDeleting(false);
+        setPhraseIdx((p) => (p + 1) % AI_PROMPT_EXAMPLES.length);
+      }
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [charCount, deleting, phraseIdx, aiPromptFocused, aiPrompt]);
+
   // Jump directly to a chosen Mail feature (from the navigator). Reset the
   // compose state, then seed just enough so the user starts at that feature's
   // beginning and the guided pulse lands on the right element.
@@ -586,7 +626,7 @@ export default function MailMockup({
               {settingsOpen && (
                 <div
                   className="snp-mockup-fade snp-scroll"
-                  style={{ position: "absolute", top: 40, right: 0, width: 300, maxHeight: 400, overflowY: "auto", background: "#ffffff", border: "1px solid #ECEAF2", borderRadius: 14, boxShadow: "0 10px 34px rgba(17,17,17,.16)", padding: "16px 16px 14px", zIndex: 30 }}
+                  style={{ position: "absolute", top: 40, right: 0, width: 300, maxHeight: 440, overflowY: "auto", background: "#ffffff", border: "1px solid #ECEAF2", borderRadius: 14, boxShadow: "0 10px 34px rgba(17,17,17,.16)", padding: "16px 16px 14px", zIndex: 30 }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                     <span style={{ fontSize: 14.5, fontWeight: 700, color: "#111111" }}>Quick settings</span>
@@ -1117,7 +1157,13 @@ export default function MailMockup({
                     type="text"
                     value={aiPrompt}
                     onChange={(e) => setAiPrompt(e.target.value)}
-                    placeholder="Describe what you want to write…"
+                    onFocus={() => setAiPromptFocused(true)}
+                    onBlur={() => setAiPromptFocused(false)}
+                    placeholder={
+                      aiPromptFocused
+                        ? "Describe what you want to write…"
+                        : AI_PROMPT_EXAMPLES[phraseIdx].slice(0, charCount) || "Describe what you want to write…"
+                    }
                     disabled={generating}
                     style={{ width: "100%", border: "none", outline: "none", fontSize: 12.5, color: "#111111", fontFamily: "inherit", background: "transparent", padding: "2px 2px" }}
                   />

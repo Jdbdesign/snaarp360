@@ -9,7 +9,7 @@ import { icons, productIcon } from "@/lib/assets";
  * Interactive Snaarp unified sign-in screen (How It Works tour, step 1).
  *
  * Guided flow:
- *   1. Amber pulse cue starts on the Email field.
+ *   1. Red pulse cue starts on the Email field.
  *   2. When the typed email contains "com", the cue moves to the Password field.
  *   3. When the password is at least 3 chars, the cue moves to the Sign-in button.
  *   4. Clicking the button shows a ~2s loading state, then calls onSignedIn()

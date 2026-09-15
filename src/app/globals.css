@@ -89,11 +89,25 @@
   color: #7c3aed;
 }
 
-/* "How It Works" tour: left product navigator + right live mockup. */
+/*
+  "How It Works" tour: left product navigator + right live mockup.
+  A fixed 380px sidebar reads fine on large screens but eats ~40% of the
+  panel on laptop widths, where the container is much narrower — the mockup
+  is the point of the tour, so it needs the majority of the space there.
+  Sidebar width switches to a percentage (with a floor so it stays usable)
+  on laptops, so the mockup keeps ~70%+ regardless of viewport width in that
+  range; labels in the sidebar truncate with an ellipsis to absorb the
+  narrower column.
+*/
 :root {
-  --tour-cols: 380px minmax(0, 1fr);
+  --tour-cols: 280px minmax(0, 1fr);
   /* Sign-up: left orbit/features panel + right form. */
   --signup-cols: minmax(0, 1fr) minmax(0, 1fr);
+}
+@media (min-width: 901px) and (max-width: 1440px) {
+  :root {
+    --tour-cols: minmax(190px, 24%) minmax(0, 1fr);
+  }
 }
 @media (max-width: 900px) {
   :root {
@@ -143,15 +157,18 @@
 
 /*
   Reusable "ping" attention pulse. Wrap any element in an element with
-  `.snp-pulse` (position it relatively). A soft amber ring expands outward
-  from the element's bounds and fades, looping — signalling the clickable
-  entry point. Reusable so it can later mark the currently-selected element,
-  not just the Compose button. Respects prefers-reduced-motion.
+  `.snp-pulse` (position it relatively). A solid, high-contrast red ring
+  expands outward from the element's bounds and fades, looping — signalling
+  the clickable entry point. Colour/opacity picked so the ring stays clearly
+  red (not a washed-out pink/orange) and meets WCAG 1.4.11 contrast against
+  white for the whole animation, not just at full opacity. Reusable so it can
+  later mark the currently-selected element, not just the Compose button.
+  Respects prefers-reduced-motion.
 */
 @keyframes snpPing {
   0% {
     transform: scale(1);
-    opacity: 0.6;
+    opacity: 0.9;
   }
   100% {
     transform: scale(1.18);
@@ -168,7 +185,7 @@
   position: absolute;
   inset: -5px;
   border-radius: inherit;
-  border: 3px solid #dc2626;
+  border: 3px solid #b91c1c;
   z-index: -1;
   pointer-events: none;
   transform-origin: center;
@@ -192,11 +209,6 @@
     opacity: 1;
     transform: none;
   }
-}
-
-/* Collapsed accordion card hover — subtle canvas-soft shift signalling clickable. */
-.snp-accordion-card:hover {
-  background: #F1F1F3 !important;
 }
 
 /* Expanded feature row hover. */

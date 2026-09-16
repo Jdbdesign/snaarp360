@@ -51,6 +51,11 @@ export default function TourPanel() {
 
   // Once every feature of the active product is checked off, move the
   // dropdown (and the module/mockup shown) to the next product in the list.
+  // Deliberately keyed on `completed` alone (not `activeProduct`): this
+  // should fire only when a completion just happened, not every time the
+  // user manually reselects an already-finished product from the dropdown
+  // to look back at it — otherwise revisiting a completed module would
+  // immediately bounce them forward again.
   useEffect(() => {
     const product = tourProducts.find((p) => p.key === activeProduct);
     if (!product) return;
@@ -58,7 +63,8 @@ export default function TourPanel() {
     if (doneCount < product.features.length) return;
     const next = tourProducts[tourProducts.findIndex((p) => p.key === activeProduct) + 1];
     if (next) setActiveProduct(next.key);
-  }, [completed, activeProduct]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completed]);
 
   const handleSignedIn = () => {
     // Mark Single Sign-In complete (its one feature, index 0). The effect
